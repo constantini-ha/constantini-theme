@@ -20,6 +20,7 @@
 - **Un tema, dos modos.** Tarjetas de cristal sobre un cielo suave: azul claro y melocotón de día, índigo profundo con un brillo de brasa de noche. Acento ámbar en ambos.
 - **Un interruptor en la barra lateral.** El sol se desliza y se vuelve luna, las nubes se van y salen las estrellas. Funciona con la barra abierta, plegada y en el cajón del móvil.
 - **Nada externo.** El fondo es CSS puro: no hay imagen que descargar y funciona sin internet.
+- **Barra lateral editable.** El botón junto al interruptor abre la lista de elementos de la barra lateral: muévelos con las flechas, oculta lo que no usas y añade tus propios accesos directos a cualquier página de Home Assistant o dirección externa. Se guarda para tu usuario, en todos los dispositivos.
 - **Tres idiomas.** Inglés, portugués (Brasil) y español.
 
 ## Instalación

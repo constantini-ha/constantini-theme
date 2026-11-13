@@ -35,3 +35,15 @@
   dark mode. The header text is set apart (`app-header-text-color`).
 - Releases are `gh release create vX.Y.Z`; HACS and the Marketplace only offer
   what has a published release.
+- The sidebar editor is frontend only. Home Assistant's own order and hidden list
+  are the `sidebar` user-data key (`{panelOrder, hiddenPanels}`; the older
+  `sidebarPanelOrder` / `sidebarHiddenPanels` keys are no longer read). Shortcuts
+  and their place among the panels are the `constantini_sidebar` key
+  (`{links: [{id, name, icon, url}], order: [panel id | "link:<id>"]}`).
+- Shortcuts are `ha-list-item-button` elements inserted next to the panel items
+  (`#sidebar-panel-<url_path>`), so the sidebar's own styles apply. Lit may drop
+  them when it redraws a neighbour; the 400 ms check puts them back. The click is
+  handled by the script (`pushState` + `location-changed`), external addresses
+  open in a new tab.
+- The editor reads the order from what is drawn, then appends hidden panels. A test
+  that saves in it changes the real user's sidebar: restore both keys afterwards.

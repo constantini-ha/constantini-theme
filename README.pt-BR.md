@@ -20,6 +20,7 @@
 - **Um tema, dois modos.** Cards de vidro sobre um céu suave: azul claro e pêssego de dia, índigo profundo com um brilho de brasa à noite. Destaque âmbar nos dois.
 - **Uma chave na barra lateral.** O sol desliza e vira lua, as nuvens saem e as estrelas aparecem. Funciona com a barra aberta, recolhida e na gaveta do celular.
 - **Nada externo.** O fundo é CSS puro: não há imagem para baixar e funciona sem internet.
+- **Barra lateral editável.** O botão ao lado da chave abre a lista de itens da barra lateral: mova com as setas, oculte o que você não usa e adicione seus próprios atalhos para qualquer página do Home Assistant ou endereço de fora. Fica salvo para o seu usuário, em todos os aparelhos.
 - **Três idiomas.** Inglês, português (Brasil) e espanhol.
 
 ## Instalação

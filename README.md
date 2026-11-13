@@ -20,6 +20,7 @@
 - **One theme, two modes.** Glass cards over a soft sky: clear blue and peach by day, deep indigo with an ember glow by night. Amber accent in both.
 - **A switch in the sidebar.** The sun slides across and becomes the moon, clouds leave and stars come out. It works with the sidebar open, collapsed, and in the phone drawer.
 - **Nothing external.** The background is pure CSS, so there is no image to download and it works offline.
+- **A sidebar you can edit.** The button next to the switch opens a list of the sidebar items: move them with the arrows, hide what you do not use, and add your own shortcuts to any Home Assistant page or outside address. Saved for your user, on every device.
 - **Three languages.** English, Portuguese (Brazil) and Spanish.
 
 ## Install

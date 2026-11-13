@@ -123,18 +123,27 @@ class ConstantiniThemeSwitch extends HTMLElement {
   _toggle() {
     const hass = this._hass;
     if (!hass) return;
-    const selected = { ...(hass.selectedTheme || {}), dark: !hass.themes.darkMode };
-    // A theme this browser picked long ago and that no longer exists would win over the default.
-    if (selected.theme && selected.theme !== "default" && !(selected.theme in hass.themes.themes)) {
-      delete selected.theme;
-    }
-    document.querySelector("home-assistant").dispatchEvent(
-      new CustomEvent("settheme", { detail: selected, bubbles: true, composed: true }));
+    setTheme({ ...live(hass), dark: !hass.themes.darkMode });
   }
 }
 
 if (!customElements.get("constantini-theme-switch")) {
   customElements.define("constantini-theme-switch", ConstantiniThemeSwitch);
+}
+
+// The choice is kept in the user's account. A theme name that no longer exists there
+// would win over the default and leave the stock look, so it is dropped.
+function live(hass) {
+  const selected = { ...(hass.selectedTheme || {}) };
+  if (selected.theme && selected.theme !== "default" && !(selected.theme in hass.themes.themes)) {
+    delete selected.theme;
+  }
+  return selected;
+}
+
+function setTheme(detail) {
+  document.querySelector("home-assistant").dispatchEvent(
+    new CustomEvent("settheme", { detail, bubbles: true, composed: true }));
 }
 
 function sidebar() {
@@ -160,6 +169,8 @@ function keep() {
   toggle.toggleAttribute("expanded", bar.hasAttribute("expanded"));
   toggle.toggleAttribute("narrow", bar.hasAttribute("narrow"));
   toggle.hass = root.hass;
+  const selected = root.hass.selectedTheme;
+  if (selected && selected.theme && !("theme" in live(root.hass))) setTheme(live(root.hass));
 }
 
 if (!window.__constantiniThemeSwitch) {

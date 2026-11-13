@@ -11,9 +11,13 @@
 - The theme is one entry with `modes: light / dark`. Colours go in the modes,
   shape in the base. The dashboard background is `constantini-sky`, CSS gradients
   only: no external image.
-- The mode is per browser: the switch fires `settheme` on `<home-assistant>` with
-  `{...selectedTheme, dark}`. A stored theme name that no longer exists is dropped,
-  or it would win over the default.
+- The choice of theme and mode is kept in the **user's account** (`frontend` user
+  data, key `theme`), so it follows the person to every device; it is not per
+  browser. The switch fires `settheme` on `<home-assistant>` with
+  `{...selectedTheme, dark}`. A stored theme name that no longer exists is dropped
+  as soon as the script sees it, or it would win over the default. A test that
+  fires `settheme` changes the real user's choice: put it back afterwards
+  (`frontend/set_user_data`, key `theme`).
 - The sidebar is Home Assistant's own (`home-assistant` → `home-assistant-main` →
   `ha-sidebar`, all shadow roots). The switch is inserted before
   `ha-list-nav.after-spacer` and re-inserted by a 400 ms check; `expanded` and

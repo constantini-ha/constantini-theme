@@ -47,3 +47,8 @@
   open in a new tab.
 - The editor reads the order from what is drawn, then appends hidden panels. A test
   that saves in it changes the real user's sidebar: restore both keys afterwards.
+- The editor dialog is a plain block with a list that carries its own `max-height`.
+  As a flex column with `flex:1; min-height:0` the list collapsed to nothing on the
+  iPhone (auto-height dialog), which Chromium does not show. No WebKit is available
+  for tests here, so keep the dialog layout free of flex or grid sizing tricks, and
+  no `backdrop-filter` on the backdrop: over live cameras it made the phone stutter.

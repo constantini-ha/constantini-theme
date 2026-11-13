@@ -290,18 +290,20 @@ function placeLinks(bar) {
 }
 
 const EDITOR_STYLE = `
-  dialog { box-sizing:border-box; width:min(520px, calc(100vw - 24px)); max-height:min(760px, calc(100dvh - 24px));
+  dialog { box-sizing:border-box; width:min(520px, calc(100vw - 24px)); --room:calc(100vh - 24px);
     padding:0; border:1px solid var(--ha-card-border-color, var(--divider-color)); border-radius:22px;
     background:var(--card-background-color); color:var(--primary-text-color);
     font-family:var(--ha-font-family-body, inherit); box-shadow:0 24px 60px -20px rgba(0, 0, 0, .55);
     overflow:hidden }
-  dialog[open] { display:flex; flex-direction:column; animation:rise .22s ease-out }
-  dialog::backdrop { background:rgba(8, 12, 22, .55); backdrop-filter:blur(3px) }
-  @keyframes rise { from { opacity:0; transform:translateY(10px) scale(.98) } }
+  @supports (height:100dvh) { dialog { --room:calc(100dvh - 24px) } }
+  dialog[open] { display:block; animation:rise .18s ease-out }
+  dialog::backdrop { background:rgba(8, 12, 22, .6) }
+  @keyframes rise { from { opacity:0 } }
   header { padding:20px 22px 6px }
   h2 { margin:0; font-size:20px; font-weight:600 }
   header p { margin:6px 0 0; font-size:13px; line-height:1.45; color:var(--secondary-text-color) }
-  .body { flex:1; min-height:0; overflow-y:auto; padding:10px 14px; outline:none }
+  .body { max-height:max(160px, calc(min(760px, var(--room)) - 230px)); overflow-y:auto;
+    -webkit-overflow-scrolling:touch; overscroll-behavior:contain; padding:10px 14px; outline:none }
   .item { display:flex; align-items:center; gap:4px; min-height:48px; padding:2px 4px 2px 10px;
     border-radius:14px }
   .item:hover { background:color-mix(in srgb, var(--primary-text-color) 5%, transparent) }

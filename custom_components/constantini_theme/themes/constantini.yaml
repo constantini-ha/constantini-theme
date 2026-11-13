@@ -1,0 +1,115 @@
+Constantini:
+  # Shape and type, shared by both modes
+  ha-card-border-radius: 22px
+  ha-card-border-width: 1px
+  ha-card-backdrop-filter: blur(22px) saturate(1.5)
+  ha-font-family-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+  ha-font-family-heading: var(--ha-font-family-body)
+  primary-font-family: var(--ha-font-family-body)
+  paper-font-common-base_-_font-family: var(--ha-font-family-body)
+  mdc-typography-font-family: var(--ha-font-family-body)
+  app-header-backdrop-filter: blur(22px) saturate(1.5)
+  lovelace-background: var(--constantini-sky)
+  paper-card-background-color: var(--ha-card-background)
+  paper-listbox-background-color: var(--card-background-color)
+  ha-dialog-surface-background: var(--card-background-color)
+  mdc-theme-surface: var(--card-background-color)
+  mdc-theme-on-primary: var(--text-primary-color)
+  app-header-text-color: var(--primary-text-color)
+  app-header-selection-bar-color: var(--primary-color)
+  sidebar-menu-button-text-color: var(--primary-text-color)
+  sidebar-selected-icon-color: var(--primary-color)
+  state-icon-active-color: var(--primary-color)
+  paper-item-icon-active-color: var(--primary-color)
+  table-row-background-color: var(--card-background-color)
+  table-row-alternative-background-color: var(--secondary-background-color)
+  data-table-background-color: var(--card-background-color)
+  ha-color-primary-05: "#1f0e00"
+  ha-color-primary-10: "#331800"
+  ha-color-primary-20: "#5c2c00"
+  ha-color-primary-30: "#8a4300"
+  ha-color-primary-40: "#d97400"
+  ha-color-primary-50: "#f08a00"
+  ha-color-primary-60: "#ffa31a"
+  ha-color-primary-70: "#ffbd5c"
+  ha-color-primary-80: "#ffd699"
+  ha-color-primary-90: "#ffebcc"
+  ha-color-primary-95: "#fff5e6"
+
+  modes:
+    light:
+      constantini-sky: >-
+        radial-gradient(120% 80% at 0% 0%, rgba(110, 178, 255, 0.50) 0%, rgba(110, 178, 255, 0) 60%) fixed,
+        radial-gradient(90% 70% at 100% 100%, rgba(255, 176, 102, 0.42) 0%, rgba(255, 176, 102, 0) 62%) fixed,
+        radial-gradient(70% 60% at 100% 0%, rgba(126, 226, 208, 0.30) 0%, rgba(126, 226, 208, 0) 60%) fixed,
+        linear-gradient(160deg, #f5f8fc 0%, #e7edf5 100%) fixed
+      primary-color: "#e67e00"
+      accent-color: "#e67e00"
+      light-primary-color: "#ffd699"
+      dark-primary-color: "#b86400"
+      text-primary-color: "#ffffff"
+      primary-background-color: "#eef2f7"
+      secondary-background-color: "#e2e8f0"
+      card-background-color: "#ffffff"
+      ha-card-background: rgba(255, 255, 255, 0.66)
+      ha-card-border-color: rgba(255, 255, 255, 0.8)
+      ha-card-box-shadow: 0 1px 2px rgba(20, 40, 80, 0.05), 0 12px 28px -16px rgba(20, 40, 80, 0.28)
+      clear-background-color: "#ffffff"
+      divider-color: rgba(18, 34, 64, 0.10)
+      outline-color: rgba(18, 34, 64, 0.16)
+      primary-text-color: "#162030"
+      secondary-text-color: "#5a677a"
+      disabled-text-color: "#a3adbb"
+      text-dark-color: "#162030"
+      app-header-background-color: rgba(245, 248, 252, 0.72)
+      app-header-border-bottom: 1px solid rgba(18, 34, 64, 0.08)
+      sidebar-background-color: "#f6f8fb"
+      sidebar-icon-color: "#536075"
+      sidebar-text-color: "#253246"
+      sidebar-selected-text-color: "#b86400"
+      state-icon-color: "#4c596c"
+      paper-item-icon-color: "#4c596c"
+      more-info-header-background: "#ffffff"
+      markdown-code-background-color: "#e9eef5"
+      code-editor-background-color: "#ffffff"
+      label-badge-background-color: "#ffffff"
+      label-badge-text-color: "#162030"
+      scrollbar-thumb-color: rgba(18, 34, 64, 0.22)
+    dark:
+      constantini-sky: >-
+        radial-gradient(120% 80% at 0% 0%, rgba(76, 96, 232, 0.34) 0%, rgba(76, 96, 232, 0) 60%) fixed,
+        radial-gradient(90% 70% at 100% 100%, rgba(255, 138, 40, 0.17) 0%, rgba(255, 138, 40, 0) 62%) fixed,
+        radial-gradient(70% 60% at 100% 0%, rgba(22, 168, 178, 0.20) 0%, rgba(22, 168, 178, 0) 60%) fixed,
+        linear-gradient(160deg, #0b1220 0%, #111a2e 100%) fixed
+      primary-color: "#ffa31a"
+      accent-color: "#ffa31a"
+      light-primary-color: "#5c2c00"
+      dark-primary-color: "#ffbd5c"
+      text-primary-color: "#1d1300"
+      primary-background-color: "#0d1422"
+      secondary-background-color: "#18223a"
+      card-background-color: "#151e31"
+      ha-card-background: rgba(26, 36, 60, 0.56)
+      ha-card-border-color: rgba(255, 255, 255, 0.08)
+      ha-card-box-shadow: 0 14px 32px -18px rgba(0, 0, 0, 0.7)
+      clear-background-color: "#151e31"
+      divider-color: rgba(255, 255, 255, 0.09)
+      outline-color: rgba(255, 255, 255, 0.16)
+      primary-text-color: "#eef2f8"
+      secondary-text-color: "#9ba8bc"
+      disabled-text-color: "#5d6a80"
+      text-dark-color: "#eef2f8"
+      app-header-background-color: rgba(13, 20, 34, 0.70)
+      app-header-border-bottom: 1px solid rgba(255, 255, 255, 0.06)
+      sidebar-background-color: "#0f1727"
+      sidebar-icon-color: "#93a1b8"
+      sidebar-text-color: "#d7deea"
+      sidebar-selected-text-color: "#ffa31a"
+      state-icon-color: "#c3cddc"
+      paper-item-icon-color: "#c3cddc"
+      more-info-header-background: "#151e31"
+      markdown-code-background-color: "#1c2740"
+      code-editor-background-color: "#0d1422"
+      label-badge-background-color: "#151e31"
+      label-badge-text-color: "#eef2f8"
+      scrollbar-thumb-color: rgba(255, 255, 255, 0.22)

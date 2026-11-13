@@ -1,0 +1,18 @@
+{
+  "codeowners": [
+    "@Constantini21"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "frontend",
+    "http"
+  ],
+  "documentation": "https://github.com/constantini-ha/constantini-theme",
+  "domain": "constantini_theme",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/constantini-ha/constantini-theme/issues",
+  "name": "Constantini Theme",
+  "single_config_entry": true,
+  "version": "1.0.0"
+}

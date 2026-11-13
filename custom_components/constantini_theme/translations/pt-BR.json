@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Tema Constantini",
+        "description": "Adiciona o tema Constantini, claro e escuro, e uma chave de sol e lua no fim da barra lateral. Não há nada para configurar."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "O tema já está instalado."
+    }
+  }
+}

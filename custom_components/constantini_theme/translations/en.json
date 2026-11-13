@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Constantini Theme",
+        "description": "Adds the Constantini theme, in light and dark, and a sun and moon switch at the bottom of the sidebar. There is nothing to configure."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "The theme is already installed."
+    }
+  }
+}

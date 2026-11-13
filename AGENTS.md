@@ -15,7 +15,9 @@
   data, key `theme`), so it follows the person to every device; it is not per
   browser. The switch fires `settheme` on `<home-assistant>` with
   `{...selectedTheme, dark}`. A stored theme name that no longer exists is dropped
-  as soon as the script sees it, or it would win over the default. A test that
+  as soon as the script sees it, or it would win over the default. Home Assistant
+  merges the event detail into the stored choice, so clearing takes `theme: ""`,
+  not a missing key. A test that
   fires `settheme` changes the real user's choice: put it back afterwards
   (`frontend/set_user_data`, key `theme`).
 - The sidebar is Home Assistant's own (`home-assistant` → `home-assistant-main` →

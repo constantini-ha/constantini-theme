@@ -132,11 +132,12 @@ if (!customElements.get("constantini-theme-switch")) {
 }
 
 // The choice is kept in the user's account. A theme name that no longer exists there
-// would win over the default and leave the stock look, so it is dropped.
+// would win over the default and leave the stock look, so it is cleared. Home Assistant
+// merges the event into what it has: only an empty name clears it.
 function live(hass) {
   const selected = { ...(hass.selectedTheme || {}) };
   if (selected.theme && selected.theme !== "default" && !(selected.theme in hass.themes.themes)) {
-    delete selected.theme;
+    selected.theme = "";
   }
   return selected;
 }
@@ -170,7 +171,7 @@ function keep() {
   toggle.toggleAttribute("narrow", bar.hasAttribute("narrow"));
   toggle.hass = root.hass;
   const selected = root.hass.selectedTheme;
-  if (selected && selected.theme && !("theme" in live(root.hass))) setTheme(live(root.hass));
+  if (selected && selected.theme && !live(root.hass).theme) setTheme(live(root.hass));
 }
 
 if (!window.__constantiniThemeSwitch) {

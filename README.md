@@ -21,6 +21,8 @@
 - **A switch in the sidebar.** The sun slides across and becomes the moon, clouds leave and stars come out. It works with the sidebar open, collapsed, and in the phone drawer.
 - **Nothing external.** The background is pure CSS, so there is no image to download and it works offline.
 - **A sidebar you can edit.** The button next to the switch opens a list of the sidebar items: move them with the arrows, hide what you do not use, and add your own shortcuts to any Home Assistant page or outside address. Saved for your user, on every device.
+- **A greeting that knows the time.** The `custom:constantini-greeting` card writes "Good morning", "Good afternoon" or "Good evening" followed by the name of whoever is signed in, letter by letter, with a waving hand. Add it from the card picker or with `type: custom:constantini-greeting` (optional `name:` to fix the name).
+- **Cards that arrive.** When a dashboard opens, the cards fade and rise into place one after the other. Both animations stay off when the device asks for reduced motion.
 - **Three languages.** English, Portuguese (Brazil) and Spanish.
 
 ## Install

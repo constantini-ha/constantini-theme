@@ -1,7 +1,7 @@
 # Notes for whoever works on this integration
 
 - User-visible text ships in three languages (en, pt-BR, es): `translations/`,
-  the label in `frontend/constantini-theme-switch.js`, the three READMEs and the
+  the texts in `frontend/constantini-theme-switch.js` and `frontend/constantini-motion.js`, the three READMEs and the
   release notes.
 - Home Assistant has no call to register a theme. The integration writes into
   `hass.data["frontend_themes"]` and fires `themes_updated`; `frontend.reload_themes`
@@ -52,3 +52,17 @@
   iPhone (auto-height dialog), which Chromium does not show. No WebKit is available
   for tests here, so keep the dialog layout free of flex or grid sizing tricks, and
   no `backdrop-filter` on the backdrop: over live cameras it made the phone stutter.
+- `frontend/constantini-motion.js` holds the greeting card and the card entrance. Every
+  file in `SCRIPT_FILES` is added as an extra frontend module.
+- The greeting takes the period from the browser clock (5 to 12 morning, 12 to 18
+  afternoon, otherwise evening) and the name from `hass.user.name`, capitalised when it
+  is all lower case. It redraws only when the sentence changes.
+- The card entrance is a stylesheet adopted into the shadow root of whatever holds the
+  `hui-card` elements (`hui-grid-section` and the non-section views). The hook is on
+  `createRenderRoot`: Home Assistant's scoped element registry copies `connectedCallback`
+  when the element is defined, so patching that on the prototype does nothing. The rule
+  must be in place before the first paint, or cards show and then blink. Only opacity and
+  transform, `backwards` fill, so no transform is left on a card afterwards.
+- In a test, serve the scripts through `page.route` on the real URL. A script injected
+  before the page loads runs ahead of that registry and its elements are lost.
+- This dashboard has no real waiting state for cards: they all draw within a second.

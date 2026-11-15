@@ -21,6 +21,8 @@
 - **Un interruptor en la barra lateral.** El sol se desliza y se vuelve luna, las nubes se van y salen las estrellas. Funciona con la barra abierta, plegada y en el cajón del móvil.
 - **Nada externo.** El fondo es CSS puro: no hay imagen que descargar y funciona sin internet.
 - **Barra lateral editable.** El botón junto al interruptor abre la lista de elementos de la barra lateral: muévelos con las flechas, oculta lo que no usas y añade tus propios accesos directos a cualquier página de Home Assistant o dirección externa. Se guarda para tu usuario, en todos los dispositivos.
+- **Un saludo que sabe la hora.** La tarjeta `custom:constantini-greeting` escribe "Buenos días", "Buenas tardes" o "Buenas noches" seguido del nombre de quien inició sesión, letra por letra, con una mano que saluda. Añádela desde el selector de tarjetas o con `type: custom:constantini-greeting` (`name:` opcional para fijar el nombre).
+- **Tarjetas que llegan.** Al abrir un panel, las tarjetas aparecen y suben a su sitio una tras otra. Las dos animaciones quedan apagadas cuando el dispositivo pide movimiento reducido.
 - **Tres idiomas.** Inglés, portugués (Brasil) y español.
 
 ## Instalación

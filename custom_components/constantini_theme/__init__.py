@@ -15,8 +15,8 @@ from .const import (
     DEFAULT_DARK_THEME_KEY,
     DEFAULT_THEME_KEY,
     DOMAIN,
+    SCRIPT_FILES,
     STOCK_THEME,
-    SWITCH_FILE,
     THEME_FILE,
     THEME_NAME,
     THEMES_KEY,
@@ -56,9 +56,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.http.async_register_static_paths(
             [StaticPathConfig(base, str(HERE / "frontend"), cache_headers=True)]
         )
-    url = f"{base}/{SWITCH_FILE}"
-    add_extra_js_url(hass, url)
-    entry.async_on_unload(lambda: remove_extra_js_url(hass, url))
+    for name in SCRIPT_FILES:
+        url = f"{base}/{name}"
+        add_extra_js_url(hass, url)
+        entry.async_on_unload(lambda url=url: remove_extra_js_url(hass, url))
     return True
 
 

@@ -3,7 +3,7 @@
 DOMAIN = "constantini_theme"
 THEME_NAME = "Constantini"
 THEME_FILE = "constantini.yaml"
-SWITCH_FILE = "constantini-theme-switch.js"
+SCRIPT_FILES = ("constantini-theme-switch.js", "constantini-motion.js")
 
 # Home Assistant keeps its themes under these keys and has no call to add one.
 THEMES_KEY = "frontend_themes"

@@ -20,6 +20,8 @@ const SKIES = {
   lightning: "storm", "lightning-rainy": "storm", snowy: "snow",
   cloudy: "cloudy", windy: "cloudy", "windy-variant": "cloudy", fog: "fog", partlycloudy: "partly",
 };
+const ICONS = { "clear-night": "mdi:weather-night", partlycloudy: "mdi:weather-partly-cloudy",
+  exceptional: "mdi:alert-circle-outline" };
 const OVERCAST = ["rain", "pour", "storm", "snow", "cloudy", "fog"];
 
 // The same spot every time, so a redraw does not shuffle the sky.
@@ -30,11 +32,21 @@ const spread = (index, salt) => {
 
 const GREETING_STYLE = `
   :host { display:block }
-  .card { position:relative; overflow:hidden; isolation:isolate; min-height:112px; box-sizing:border-box;
-    display:flex; flex-direction:column; justify-content:center; padding:18px 100px 18px 20px;
+  .card { position:relative; overflow:hidden; isolation:isolate;
     border-radius:var(--ha-card-border-radius, 22px); color:#fff;
     font-family:var(--ha-font-family-body, inherit);
     box-shadow:inset 0 0 0 1px rgba(255, 255, 255, .12) }
+  .top { min-height:104px; box-sizing:border-box; display:flex; flex-direction:column;
+    justify-content:center; padding:18px 100px 18px 20px }
+  .days { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; padding:10px 8px 14px;
+    border-top:1px solid rgba(255, 255, 255, .14); background:rgba(6, 12, 32, .22);
+    text-align:center; text-shadow:0 1px 6px rgba(0, 10, 40, .45) }
+  .days:empty { display:none }
+  .day { display:grid; justify-items:center; gap:2px; min-width:0 }
+  .day span { font-size:12px; opacity:.85; text-transform:lowercase }
+  .day ha-icon { --mdc-icon-size:24px; margin:2px 0 }
+  .day b { font-size:14px; font-weight:600 }
+  .day small { font-size:12px; opacity:.75 }
   h2 { margin:0; font-size:21px; line-height:1.25; font-weight:600; letter-spacing:-.01em;
     text-shadow:0 1px 8px rgba(0, 10, 40, .45) }
   p { margin:4px 0 0; font-size:13px; line-height:1.35; opacity:.9; text-shadow:0 1px 6px rgba(0, 10, 40, .45) }
@@ -53,7 +65,7 @@ const GREETING_STYLE = `
   .star.big { width:3px; height:3px; box-shadow:0 0 6px 1px rgba(200, 215, 255, .7) }
   .shoot { top:14%; right:30%; width:46px; height:1.5px; border-radius:2px; opacity:0;
     background:linear-gradient(90deg, #fff, transparent); animation:shoot 9s ease-in 3s infinite }
-  .orb { right:26px; top:50%; width:46px; height:46px; margin-top:-23px }
+  .orb { right:26px; top:29px; width:46px; height:46px }
   .orb i { inset:0; border-radius:50% }
   .moon .disc { background:radial-gradient(circle at 35% 30%, #fff 0%, #dfe5f2 60%, #b9c2d6 100%);
     box-shadow:0 1px 3px rgba(0, 0, 0, .5) }
@@ -71,11 +83,11 @@ const GREETING_STYLE = `
     -webkit-mask:radial-gradient(circle, transparent 42%, #000 46%, transparent 72%);
     mask:radial-gradient(circle, transparent 42%, #000 46%, transparent 72%);
     animation:spin 26s linear infinite }
-  .afternoon .sun { width:54px; height:54px; margin-top:-30px }
+  .afternoon .sun { width:54px; height:54px; top:20px }
   .afternoon .sun .rays { inset:-32px; animation-duration:16s }
   .afternoon .sun .halo { inset:-34px; animation-duration:2.6s }
-  .morning .sun { top:auto; bottom:2px; margin:0; animation:dawn 7s ease-in-out infinite alternate }
-  .morning .horizon { right:-30px; bottom:-60px; width:220px; height:120px; border-radius:50%;
+  .morning .sun { top:56px; animation:dawn 7s ease-in-out infinite alternate }
+  .morning .horizon { right:-30px; top:44px; width:220px; height:120px; border-radius:50%;
     background:radial-gradient(ellipse, rgba(255, 190, 110, .75) 0%, rgba(255, 190, 110, 0) 70%);
     animation:glow 7s ease-in-out infinite }
 
@@ -137,10 +149,46 @@ class ConstantiniGreeting extends HTMLElement {
 
   disconnectedCallback() {
     clearInterval(this._clock);
+    this._follow(null);
+  }
+
+  // The days come from the same daily forecast the weather card subscribes to.
+  _follow(id) {
+    if (id === this._followed) return;
+    this._followed = id;
+    if (this._stop) this._stop.then((stop) => stop()).catch(() => {});
+    this._stop = null;
+    this._days = [];
+    if (!id) return;
+    this._stop = this._hass.connection.subscribeMessage((message) => {
+      if (this._followed !== id) return;
+      this._days = (message.forecast || []).slice(0, 5);
+      this._drawDays();
+    }, { type: "weather/subscribe_forecast", forecast_type: "daily", entity_id: id });
+    this._stop.catch(() => {});
+  }
+
+  _drawDays() {
+    const row = this.shadowRoot.querySelector(".days");
+    if (!row) return;
+    const language = this._hass.language;
+    const number = new Intl.NumberFormat(language, { maximumFractionDigits: 1 });
+    const weekday = new Intl.DateTimeFormat(language, { weekday: "short" });
+    row.innerHTML = "";
+    for (const day of this._days || []) {
+      const cell = document.createElement("div");
+      cell.className = "day";
+      cell.innerHTML = "<span></span><ha-icon></ha-icon><b></b><small></small>";
+      cell.querySelector("span").textContent = weekday.format(new Date(day.datetime)).replace(".", "");
+      cell.querySelector("ha-icon").setAttribute("icon", ICONS[day.condition] || `mdi:weather-${day.condition}`);
+      cell.querySelector("b").textContent = `${number.format(day.temperature)}°`;
+      cell.querySelector("small").textContent = day.templow == null ? "" : `${number.format(day.templow)}°`;
+      row.append(cell);
+    }
   }
 
   getCardSize() {
-    return 2;
+    return 4;
   }
 
   getGridOptions() {
@@ -162,16 +210,20 @@ class ConstantiniGreeting extends HTMLElement {
     const hass = this._hass;
     if (!hass || !this.isConnected) return;
     const root = this.shadowRoot;
-    if (!root.querySelector(".card")) {
+    const fresh = !root.querySelector(".card");
+    if (fresh) {
       root.innerHTML = `<style>${GREETING_STYLE}</style>
-        <div class="card"><div class="sky" aria-hidden="true"></div><h2></h2><p></p></div>`;
+        <div class="card"><div class="sky" aria-hidden="true"></div>
+          <div class="top"><h2></h2><p></p></div><div class="days"></div></div>`;
     }
+    if (fresh) this._drawDays();
     let name = (this._config.name || (hass.user && hass.user.name) || "").trim();
     if (name && name === name.toLowerCase()) name = name[0].toUpperCase() + name.slice(1);
     const time = period(new Date().getHours());
     const greeting = words(hass.language)[time];
     const title = name ? `${greeting}, ${name}` : greeting;
     const weather = this._weather();
+    this._follow(weather ? weather.entity_id : null);
     let detail = "";
     if (weather && hass.formatEntityState) {
       detail = [hass.formatEntityState(weather),
@@ -224,7 +276,7 @@ class ConstantiniGreeting extends HTMLElement {
       }
     }
     if (kind === "partly") {
-      put("cloud", { right: "14px", top: "58%", "--t": "9s", "--d": "0s" });
+      put("cloud", { right: "14px", top: "54px", "--t": "9s", "--d": "0s" });
     } else if (!open && kind !== "fog") {
       [[8, 20, 1], [58, 42, .8], [-20, 56, .7]].forEach(([right, top, size], n) => put("cloud", {
         right: `${right}px`, top: `${top}px`, transform: `scale(${size})`, opacity: n ? ".85" : "1",

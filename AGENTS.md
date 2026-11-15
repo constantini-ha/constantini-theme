@@ -62,6 +62,10 @@
   pair changes, or every state update would restart the animations; the texts are
   updated in place. The condition line is `hass.formatEntityState`, so Home Assistant
   translates it.
+- The five days under the greeting come from `weather/subscribe_forecast` (daily), the
+  subscription the weather card uses. The subscription is dropped when the card leaves the
+  page or the entity changes. Their icons are `mdi:weather-<condition>`, with the few
+  names that differ in `ICONS`.
 - The sky runs all the time on a phone that also shows live cameras: animate only
   opacity and transform, no `filter` and no `backdrop-filter`. To look at every sky at
   once, load the script in a plain page with a fake `hass` (the element needs only

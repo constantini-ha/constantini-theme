@@ -20,8 +20,49 @@ const SKIES = {
   lightning: "storm", "lightning-rainy": "storm", snowy: "snow",
   cloudy: "cloudy", windy: "cloudy", "windy-variant": "cloudy", fog: "fog", partlycloudy: "partly",
 };
-const ICONS = { "clear-night": "mdi:weather-night", partlycloudy: "mdi:weather-partly-cloudy",
-  exceptional: "mdi:alert-circle-outline" };
+
+// What each condition's small icon is made of: [sun or moon, clouds, falling drops, extra].
+const ICON_PARTS = {
+  sunny: ["sun", 0, 0], "clear-night": ["moon", 0, 0], partlycloudy: ["peek", 1, 0], cloudy: ["", 2, 0],
+  rainy: ["", 1, 3], pouring: ["", 2, 4], lightning: ["", 2, 0, "bolt"], "lightning-rainy": ["", 2, 2, "bolt"],
+  snowy: ["", 1, 0, "snow"], "snowy-rainy": ["", 1, 2, "snow"], hail: ["", 2, 0, "snow"],
+  fog: ["", 1, 0, "lines"], windy: ["", 1, 0, "lines"], "windy-variant": ["", 2, 0, "lines"],
+};
+const CLOUD = "M10 29a6 6 0 0 1 0-12a8.5 8.5 0 0 1 16.3-2.2a7 7 0 0 1 2.2 14.2z";
+
+function weatherIcon(condition) {
+  const [light, clouds, drops, extra] = ICON_PARTS[condition] || ["", 1, 0];
+  const below = drops || extra;
+  let svg = "";
+  if (light === "sun") {
+    // Plain coordinates: a rotate attribute would turn around each ray's own centre here.
+    const rays = [0, 1, 2, 3, 4, 5, 6, 7].map((n) => {
+      const [x, y] = [Math.cos(n * Math.PI / 4), Math.sin(n * Math.PI / 4)];
+      return `<line x1="${20 + x * 12}" y1="${20 + y * 12}" x2="${20 + x * 15.5}" y2="${20 + y * 15.5}"/>`;
+    }).join("");
+    svg += `<g class="rays">${rays}</g><circle class="disc" cx="20" cy="20" r="8"/>`;
+  }
+  if (light === "moon") svg += '<path class="moon" d="M23 7a13 13 0 1 0 10 19.5A11 11 0 0 1 23 7z"/>';
+  if (light === "peek") svg += '<circle class="disc" cx="28" cy="13" r="7"/>';
+  if (clouds) {
+    svg += `<g transform="translate(0 ${below ? -5 : light ? 3 : 0})"><g class="cl">${clouds > 1
+      ? `<path class="back" transform="translate(11 -3) scale(.76)" d="${CLOUD}"/>` : ""}<path class="front" d="${CLOUD}"/></g></g>`;
+  }
+  for (let n = 0; n < drops; n++) {
+    const x = 11 + (n * 17) / Math.max(drops - 1, 1) + (extra ? 2 : 0);
+    svg += `<line class="rain${drops > 3 ? " fast" : ""}" x1="${x}" y1="28" x2="${x - 1.5}" y2="32" style="animation-delay:${-n * .37}s"/>`;
+  }
+  if (extra === "bolt") svg += '<polygon class="zap" points="21,21 14.5,30.5 19,30.5 17,38 25,27.5 20.5,27.5 23,21"/>';
+  if (extra === "snow") {
+    for (let n = 0; n < (drops ? 2 : 3); n++) {
+      svg += `<circle class="flk" cx="${drops ? 16 + n * 9 : 12 + n * 8}" cy="29" r="1.6" style="animation-delay:${-n * .8}s"/>`;
+    }
+  }
+  if (extra === "lines") {
+    svg += [0, 1, 2].map((n) => `<line class="fogl" x1="${8 + n * 2}" y1="${28 + n * 4}" x2="${30 - n * 3}" y2="${28 + n * 4}" style="animation-delay:${-n * 1.1}s"/>`).join("");
+  }
+  return `<svg class="wx" viewBox="0 0 40 40" aria-hidden="true">${svg}</svg>`;
+}
 const OVERCAST = ["rain", "pour", "storm", "snow", "cloudy", "fog"];
 
 // The same spot every time, so a redraw does not shuffle the sky.
@@ -44,7 +85,20 @@ const GREETING_STYLE = `
   .days:empty { display:none }
   .day { display:grid; justify-items:center; gap:2px; min-width:0 }
   .day span { font-size:12px; opacity:.85; text-transform:lowercase }
-  .day ha-icon { --mdc-icon-size:24px; margin:2px 0 }
+  .wx { width:38px; height:38px; margin:2px 0; overflow:visible; fill:none }
+  .wx * { transform-box:fill-box; transform-origin:center }
+  .wx .front { fill:#fff }
+  .wx .back { fill:#b9c4d2 }
+  .wx .cl { animation:bob 4s ease-in-out infinite alternate }
+  .wx .disc { fill:#ffd23f; animation:beat 3s ease-in-out infinite }
+  .wx .rays { stroke:#ffd23f; stroke-width:2; stroke-linecap:round; animation:spin 12s linear infinite }
+  .wx .moon { fill:#e6ebf5; animation:beat 4.5s ease-in-out infinite }
+  .wx .rain { stroke:#5ab4ff; stroke-width:2; stroke-linecap:round; animation:drip 1.1s linear infinite }
+  .wx .rain.fast { animation-duration:.7s }
+  .wx .zap { fill:#ffd23f; animation:zap 2.6s linear infinite }
+  .wx .flk { fill:#fff; animation:drip 2.4s linear infinite }
+  .wx .fogl { stroke:#fff; stroke-width:2; stroke-linecap:round; opacity:.8;
+    animation:bob 3.2s ease-in-out infinite alternate }
   .day b { font-size:14px; font-weight:600 }
   .day small { font-size:12px; opacity:.75 }
   h2 { margin:0; font-size:21px; line-height:1.25; font-weight:600; letter-spacing:-.01em;
@@ -110,6 +164,11 @@ const GREETING_STYLE = `
     background:radial-gradient(ellipse at center, rgba(255, 255, 255, .28) 0%, rgba(255, 255, 255, 0) 70%);
     animation:drift var(--t) ease-in-out var(--d) infinite alternate }
 
+  @keyframes bob { from { transform:translateX(-1.4px) } to { transform:translateX(1.4px) } }
+  @keyframes beat { 0%, 100% { transform:scale(1) } 50% { transform:scale(1.12) } }
+  @keyframes drip { 0% { transform:translateY(-3px); opacity:0 } 25% { opacity:1 }
+    100% { transform:translateY(6px); opacity:0 } }
+  @keyframes zap { 0%, 55%, 100% { opacity:1 } 60% { opacity:.15 } 65% { opacity:1 } 70% { opacity:.3 } 78% { opacity:1 } }
   @keyframes twinkle { 0%, 100% { opacity:1; transform:scale(1) } 50% { opacity:.2; transform:scale(.6) } }
   @keyframes shoot { 0% { opacity:0; transform:translate3d(60px, -20px, 0) rotate(-24deg) }
     2% { opacity:1 } 9% { opacity:0; transform:translate3d(-120px, 60px, 0) rotate(-24deg) }
@@ -122,7 +181,7 @@ const GREETING_STYLE = `
   @keyframes fall { to { transform:translate3d(-34px, 170px, 0) } }
   @keyframes snow { 50% { transform:translate3d(10px, 80px, 0) } 100% { transform:translate3d(-6px, 170px, 0) } }
   @keyframes flash { 0%, 90%, 100% { opacity:0 } 91% { opacity:.55 } 92% { opacity:.08 } 93.5% { opacity:.4 } 96% { opacity:0 } }
-  @media (prefers-reduced-motion: reduce) { .sky i { animation:none !important } }
+  @media (prefers-reduced-motion: reduce) { .sky i, .wx * { animation:none !important } }
 `;
 
 class ConstantiniGreeting extends HTMLElement {
@@ -178,9 +237,8 @@ class ConstantiniGreeting extends HTMLElement {
     for (const day of this._days || []) {
       const cell = document.createElement("div");
       cell.className = "day";
-      cell.innerHTML = "<span></span><ha-icon></ha-icon><b></b><small></small>";
+      cell.innerHTML = `<span></span>${weatherIcon(day.condition)}<b></b><small></small>`;
       cell.querySelector("span").textContent = weekday.format(new Date(day.datetime)).replace(".", "");
-      cell.querySelector("ha-icon").setAttribute("icon", ICONS[day.condition] || `mdi:weather-${day.condition}`);
       cell.querySelector("b").textContent = `${number.format(day.temperature)}°`;
       cell.querySelector("small").textContent = day.templow == null ? "" : `${number.format(day.templow)}°`;
       row.append(cell);

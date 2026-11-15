@@ -20,6 +20,10 @@ Constantini:
   sidebar-menu-button-text-color: var(--primary-text-color)
   sidebar-selected-icon-color: var(--primary-color)
   state-icon-active-color: var(--primary-color)
+  state-active-color: var(--primary-color)
+  state-switch-active-color: var(--primary-color)
+  ha-heading-card-title-font-size: 17px
+  ha-heading-card-title-font-weight: 600
   paper-item-icon-active-color: var(--primary-color)
   table-row-background-color: var(--card-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
@@ -53,7 +57,7 @@ Constantini:
       card-background-color: "#ffffff"
       ha-card-background: rgba(255, 255, 255, 0.66)
       ha-card-border-color: rgba(255, 255, 255, 0.8)
-      ha-card-box-shadow: 0 1px 2px rgba(20, 40, 80, 0.05), 0 12px 28px -16px rgba(20, 40, 80, 0.28)
+      ha-card-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(20, 40, 80, 0.05), 0 12px 28px -16px rgba(20, 40, 80, 0.28)
       clear-background-color: "#ffffff"
       divider-color: rgba(18, 34, 64, 0.10)
       outline-color: rgba(18, 34, 64, 0.16)
@@ -91,7 +95,7 @@ Constantini:
       card-background-color: "#151e31"
       ha-card-background: rgba(26, 36, 60, 0.56)
       ha-card-border-color: rgba(255, 255, 255, 0.08)
-      ha-card-box-shadow: 0 14px 32px -18px rgba(0, 0, 0, 0.7)
+      ha-card-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 14px 32px -18px rgba(0, 0, 0, 0.7)
       clear-background-color: "#151e31"
       divider-color: rgba(255, 255, 255, 0.09)
       outline-color: rgba(255, 255, 255, 0.16)

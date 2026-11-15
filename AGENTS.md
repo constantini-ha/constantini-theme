@@ -80,3 +80,7 @@
 - In a test, serve the scripts through `page.route` on the real URL. A script injected
   before the page loads runs ahead of that registry and its elements are lost.
 - This dashboard has no real waiting state for cards: they all draw within a second.
+- To try a colour or shape change quickly, set the CSS variables on
+  `document.documentElement.style` in a test browser: nothing is saved. The sky exists
+  only on dashboards (`lovelace-background`); settings pages use
+  `primary-background-color`, which must stay a plain colour.

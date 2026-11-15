@@ -79,13 +79,13 @@ const GREETING_STYLE = `
     box-shadow:inset 0 0 0 1px rgba(255, 255, 255, .12) }
   .top { min-height:104px; box-sizing:border-box; display:flex; flex-direction:column;
     justify-content:center; padding:18px 100px 18px 20px }
-  .days { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; padding:10px 8px 14px;
+  .days { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; padding:7px 8px 9px;
     border-top:1px solid rgba(255, 255, 255, .14); background:rgba(6, 12, 32, .22);
     text-align:center; text-shadow:0 1px 6px rgba(0, 10, 40, .45) }
   .days:empty { display:none }
-  .day { display:grid; justify-items:center; gap:2px; min-width:0 }
-  .day span { font-size:12px; opacity:.85; text-transform:lowercase }
-  .wx { width:38px; height:38px; margin:2px 0; overflow:visible; fill:none }
+  .day { display:grid; justify-items:center; gap:0; min-width:0; line-height:1.3 }
+  .day span { font-size:11px; opacity:.85; text-transform:lowercase }
+  .wx { width:26px; height:26px; margin:1px 0 2px; overflow:visible; fill:none }
   .wx * { transform-box:fill-box; transform-origin:center }
   .wx .front { fill:#fff }
   .wx .back { fill:#b9c4d2 }
@@ -99,8 +99,8 @@ const GREETING_STYLE = `
   .wx .flk { fill:#fff; animation:drip 2.4s linear infinite }
   .wx .fogl { stroke:#fff; stroke-width:2; stroke-linecap:round; opacity:.8;
     animation:bob 3.2s ease-in-out infinite alternate }
-  .day b { font-size:14px; font-weight:600 }
-  .day small { font-size:12px; opacity:.75 }
+  .day b { font-size:12px; font-weight:600 }
+  .day small { font-size:11px; opacity:.75 }
   h2 { margin:0; font-size:21px; line-height:1.25; font-weight:600; letter-spacing:-.01em;
     text-shadow:0 1px 8px rgba(0, 10, 40, .45) }
   p { margin:4px 0 0; font-size:13px; line-height:1.35; opacity:.9; text-shadow:0 1px 6px rgba(0, 10, 40, .45) }

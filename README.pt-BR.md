@@ -21,7 +21,7 @@
 - **Uma chave na barra lateral.** O sol desliza e vira lua, as nuvens saem e as estrelas aparecem. Funciona com a barra aberta, recolhida e na gaveta do celular.
 - **Nada externo.** O fundo é CSS puro: não há imagem para baixar e funciona sem internet.
 - **Barra lateral editável.** O botão ao lado da chave abre a lista de itens da barra lateral: mova com as setas, oculte o que você não usa e adicione seus próprios atalhos para qualquer página do Home Assistant ou endereço de fora. Fica salvo para o seu usuário, em todos os aparelhos.
-- **Uma saudação que sabe a hora.** O card `custom:constantini-greeting` escreve "Bom dia", "Boa tarde" ou "Boa noite" seguido do nome de quem está logado, letra por letra, com uma mão acenando. Adicione pelo seletor de cards ou com `type: custom:constantini-greeting` (`name:` opcional para fixar o nome).
+- **Uma saudação sob um céu vivo.** O card `custom:constantini-greeting` diz "Bom dia", "Boa tarde" ou "Boa noite" com o nome de quem está logado, sobre um céu que não para de se mexer: sol nascendo de manhã, sol mais forte à tarde, lua e estrelas brilhando à noite. Quando a entidade de clima diz chuva, tempestade, neve, nuvens ou neblina, o céu mostra isso. Adicione pelo seletor de cards ou com `type: custom:constantini-greeting` (`weather:` opcional para escolher a entidade de clima e `name:` para fixar o nome).
 - **Cards que chegam.** Ao abrir um painel, os cards surgem e sobem para o lugar um depois do outro. As duas animações ficam desligadas quando o aparelho pede movimento reduzido.
 - **Três idiomas.** Inglês, português (Brasil) e espanhol.
 

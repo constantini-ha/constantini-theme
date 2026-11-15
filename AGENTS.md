@@ -56,7 +56,16 @@
   file in `SCRIPT_FILES` is added as an extra frontend module.
 - The greeting takes the period from the browser clock (5 to 12 morning, 12 to 18
   afternoon, otherwise evening) and the name from `hass.user.name`, capitalised when it
-  is all lower case. It redraws only when the sentence changes.
+  is all lower case. The sky comes from the period plus the state of the weather entity
+  (`weather:` in the card, else the first `weather.*`), folded by `SKIES` into clear,
+  partly, cloudy, rain, pour, storm, snow and fog. The sky is rebuilt only when that
+  pair changes, or every state update would restart the animations; the texts are
+  updated in place. The condition line is `hass.formatEntityState`, so Home Assistant
+  translates it.
+- The sky runs all the time on a phone that also shows live cameras: animate only
+  opacity and transform, no `filter` and no `backdrop-filter`. To look at every sky at
+  once, load the script in a plain page with a fake `hass` (the element needs only
+  `language`, `user`, `states` and the two format functions).
 - The card entrance is a stylesheet adopted into the shadow root of whatever holds the
   `hui-card` elements (`hui-grid-section` and the non-section views). The hook is on
   `createRenderRoot`: Home Assistant's scoped element registry copies `connectedCallback`

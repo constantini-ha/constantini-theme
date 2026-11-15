@@ -31,8 +31,10 @@
   name) into the instance's `themes` folder, call `frontend.reload_themes`, and
   select it in a test browser with a `settheme` event; inject the switch with
   `page.addScriptTag`.
-- `text-primary-color` is the text on amber: white in light mode, near-black in
-  dark mode. The header text is set apart (`app-header-text-color`).
+- The accent is Home Assistant's own blue since v1.5.0 (`#03a9f4`, with the
+  frontend's default `ha-color-primary-*` scale), at the owner's request: he
+  did not want the amber. The peach/ember glow in the page background stayed.
+- `text-primary-color` is the text on the accent: white in both modes. The header text is set apart (`app-header-text-color`).
 - Releases are `gh release create vX.Y.Z`; HACS and the Marketplace only offer
   what has a published release.
 - The sidebar editor is frontend only. Home Assistant's own order and hidden list

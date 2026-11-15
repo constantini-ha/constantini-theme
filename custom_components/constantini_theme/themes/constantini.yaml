@@ -28,17 +28,17 @@ Constantini:
   table-row-background-color: var(--card-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
   data-table-background-color: var(--card-background-color)
-  ha-color-primary-05: "#1f0e00"
-  ha-color-primary-10: "#331800"
-  ha-color-primary-20: "#5c2c00"
-  ha-color-primary-30: "#8a4300"
-  ha-color-primary-40: "#d97400"
-  ha-color-primary-50: "#f08a00"
-  ha-color-primary-60: "#ffa31a"
-  ha-color-primary-70: "#ffbd5c"
-  ha-color-primary-80: "#ffd699"
-  ha-color-primary-90: "#ffebcc"
-  ha-color-primary-95: "#fff5e6"
+  ha-color-primary-05: "#001721"
+  ha-color-primary-10: "#002e3e"
+  ha-color-primary-20: "#004156"
+  ha-color-primary-30: "#006787"
+  ha-color-primary-40: "#009ac7"
+  ha-color-primary-50: "#18bcf2"
+  ha-color-primary-60: "#37c8fd"
+  ha-color-primary-70: "#7bd4fb"
+  ha-color-primary-80: "#b9e6fc"
+  ha-color-primary-90: "#dff3fc"
+  ha-color-primary-95: "#eff9fe"
 
   modes:
     light:
@@ -47,10 +47,10 @@ Constantini:
         radial-gradient(90% 70% at 100% 100%, rgba(255, 176, 102, 0.42) 0%, rgba(255, 176, 102, 0) 62%) fixed,
         radial-gradient(70% 60% at 100% 0%, rgba(126, 226, 208, 0.30) 0%, rgba(126, 226, 208, 0) 60%) fixed,
         linear-gradient(160deg, #f5f8fc 0%, #e7edf5 100%) fixed
-      primary-color: "#e67e00"
-      accent-color: "#e67e00"
-      light-primary-color: "#ffd699"
-      dark-primary-color: "#b86400"
+      primary-color: "#03a9f4"
+      accent-color: "#03a9f4"
+      light-primary-color: "#b3e5fc"
+      dark-primary-color: "#0288d1"
       text-primary-color: "#ffffff"
       primary-background-color: "#eef2f7"
       secondary-background-color: "#e2e8f0"
@@ -70,7 +70,7 @@ Constantini:
       sidebar-background-color: "#f6f8fb"
       sidebar-icon-color: "#536075"
       sidebar-text-color: "#253246"
-      sidebar-selected-text-color: "#b86400"
+      sidebar-selected-text-color: "#0288d1"
       state-icon-color: "#4c596c"
       paper-item-icon-color: "#4c596c"
       more-info-header-background: "#ffffff"
@@ -85,11 +85,11 @@ Constantini:
         radial-gradient(90% 70% at 100% 100%, rgba(255, 138, 40, 0.17) 0%, rgba(255, 138, 40, 0) 62%) fixed,
         radial-gradient(70% 60% at 100% 0%, rgba(22, 168, 178, 0.20) 0%, rgba(22, 168, 178, 0) 60%) fixed,
         linear-gradient(160deg, #0b1220 0%, #111a2e 100%) fixed
-      primary-color: "#ffa31a"
-      accent-color: "#ffa31a"
-      light-primary-color: "#5c2c00"
-      dark-primary-color: "#ffbd5c"
-      text-primary-color: "#1d1300"
+      primary-color: "#03a9f4"
+      accent-color: "#03a9f4"
+      light-primary-color: "#004156"
+      dark-primary-color: "#7bd4fb"
+      text-primary-color: "#ffffff"
       primary-background-color: "#0d1422"
       secondary-background-color: "#18223a"
       card-background-color: "#151e31"
@@ -108,7 +108,7 @@ Constantini:
       sidebar-background-color: "#0f1727"
       sidebar-icon-color: "#93a1b8"
       sidebar-text-color: "#d7deea"
-      sidebar-selected-text-color: "#ffa31a"
+      sidebar-selected-text-color: "#03a9f4"
       state-icon-color: "#c3cddc"
       paper-item-icon-color: "#c3cddc"
       more-info-header-background: "#151e31"

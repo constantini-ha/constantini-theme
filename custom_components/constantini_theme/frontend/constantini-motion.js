@@ -72,13 +72,20 @@ const spread = (index, salt) => {
 };
 
 const GREETING_STYLE = `
-  :host { display:block }
-  .card { position:relative; overflow:hidden; isolation:isolate;
+  :host { display:grid }
+  .card { position:relative; overflow:hidden; isolation:isolate; display:flex; flex-direction:column;
     border-radius:var(--ha-card-border-radius, 22px); color:#fff;
     font-family:var(--ha-font-family-body, inherit);
     box-shadow:inset 0 0 0 1px rgba(255, 255, 255, .12) }
-  .top { min-height:104px; box-sizing:border-box; display:flex; flex-direction:column;
+  .top { min-height:104px; flex:1; box-sizing:border-box; display:flex; flex-direction:column;
     justify-content:center; padding:18px 100px 18px 20px }
+  .big .top { padding:24px 150px 24px 28px }
+  .big h2 { font-size:30px }
+  .big p { font-size:16px; margin-top:8px }
+  .big .days { padding:14px 12px 16px }
+  .big .day span, .big .day small { font-size:13px }
+  .big .day b { font-size:15px }
+  .big .wx { width:38px; height:38px; margin:4px 0 5px }
   .days { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; padding:7px 8px 9px;
     border-top:1px solid rgba(255, 255, 255, .14); background:rgba(6, 12, 32, .22);
     text-align:center; text-shadow:0 1px 6px rgba(0, 10, 40, .45) }
@@ -204,11 +211,38 @@ class ConstantiniGreeting extends HTMLElement {
   connectedCallback() {
     this._draw();
     this._clock = setInterval(() => this._draw(), 60000);
+    this._stretch();
+    this._size = new ResizeObserver(([entry]) => {
+      const card = this.shadowRoot.querySelector(".card");
+      if (card) card.classList.toggle("big", entry.contentRect.height >= 300);
+    });
+    this._size.observe(this);
   }
 
   disconnectedCallback() {
     clearInterval(this._clock);
     this._follow(null);
+    if (this._size) this._size.disconnect();
+    for (const el of this._stretched || []) el.style.removeProperty("display"), el.style.removeProperty("align-self");
+    this._stretched = [];
+  }
+
+  // Alone in its section, the card grows to the height of the row of sections it sits in:
+  // every box between it and that row becomes a one-cell grid, which stretches its child.
+  _stretch() {
+    const chain = [];
+    let node = this;
+    while (node && chain.length < 12) {
+      node = node.parentNode instanceof ShadowRoot ? node.parentNode.host : node.parentNode;
+      if (!node || !node.style) return;
+      chain.push(node);
+      if (node.classList.contains("section")) break;
+      if (node.classList.contains("container") && node.children.length > 1) return;
+    }
+    if (!node || !node.classList.contains("section")) return;
+    for (const el of chain) el.style.display = "grid";
+    node.style.alignSelf = "stretch";
+    this._stretched = chain;
   }
 
   // The days come from the same daily forecast the weather card subscribes to.

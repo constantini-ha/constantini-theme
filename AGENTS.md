@@ -86,3 +86,8 @@
   `document.documentElement.style` in a test browser: nothing is saved. The sky exists
   only on dashboards (`lovelace-background`); settings pages use
   `primary-background-color`, which must stay a plain colour.
+- Alone in its section, the greeting grows to the height of the row of sections: on connect
+  it sets `display:grid` on every box up to the view's `div.section` (through the shadow
+  roots) and `align-self:stretch` on that one, and takes them back on disconnect. The owner
+  asked for a flex-like stretch, not a measured height. From 300 px tall the card gets the
+  `big` class (larger text and icons), set by a ResizeObserver on the card itself.

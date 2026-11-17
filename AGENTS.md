@@ -89,5 +89,11 @@
 - Alone in its section, the greeting grows to the height of the row of sections: on connect
   it sets `display:grid` on every box up to the view's `div.section` (through the shadow
   roots) and `align-self:stretch` on that one, and takes them back on disconnect. The owner
-  asked for a flex-like stretch, not a measured height. From 300 px tall the card gets the
-  `big` class (larger text and icons), set by a ResizeObserver on the card itself.
+  asked for a flex-like stretch, not a measured height. From 300 px tall and 380 px wide the
+  card gets the `big` class (larger text and icons), set by a ResizeObserver on the card
+  itself; narrower, the big title wraps into a card taller than the row and never shrinks back.
+- Home Assistant's `.container` in `hui-grid-section` has `margin: 0 auto`. In a block parent
+  that lays out as zero, but once the parent is a grid an auto margin shrinks the box to its
+  content: on a phone the greeting came out narrower than the other cards (1.5.1). The
+  stretch sets `margin-inline: 0` where the margins lay out as zero, and gives each box it
+  turns into a grid one full-width track (`grid-template: 1fr / minmax(0, 1fr)`).

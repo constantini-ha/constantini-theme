@@ -214,7 +214,8 @@ class ConstantiniGreeting extends HTMLElement {
     this._stretch();
     this._size = new ResizeObserver(([entry]) => {
       const card = this.shadowRoot.querySelector(".card");
-      if (card) card.classList.toggle("big", entry.contentRect.height >= 300);
+      // Narrow, the big title wraps into a card taller than the row and would never shrink back.
+      if (card) card.classList.toggle("big", entry.contentRect.height >= 300 && entry.contentRect.width >= 380);
     });
     this._size.observe(this);
   }
@@ -223,7 +224,9 @@ class ConstantiniGreeting extends HTMLElement {
     clearInterval(this._clock);
     this._follow(null);
     if (this._size) this._size.disconnect();
-    for (const el of this._stretched || []) el.style.removeProperty("display"), el.style.removeProperty("align-self");
+    for (const el of this._stretched || []) {
+      for (const name of ["display", "grid-template", "align-self", "margin-inline"]) el.style.removeProperty(name);
+    }
     this._stretched = [];
   }
 
@@ -240,9 +243,23 @@ class ConstantiniGreeting extends HTMLElement {
       if (node.classList.contains("container") && node.children.length > 1) return;
     }
     if (!node || !node.classList.contains("section")) return;
-    for (const el of chain) el.style.display = "grid";
+    // Home Assistant centres its card grid with `margin: 0 auto`, which in a grid shrinks it to
+    // its content: a margin that lays out as zero now is made a real zero.
+    const boxes = [this, ...chain];
+    const styled = new Set(chain);
+    for (let i = 1; i < boxes.length; i++) {
+      const box = boxes[i];
+      if (getComputedStyle(box).display === "grid") continue;
+      const child = getComputedStyle(boxes[i - 1]);
+      if (child.marginLeft === "0px" && child.marginRight === "0px") {
+        boxes[i - 1].style.marginInline = "0";
+        styled.add(boxes[i - 1]);
+      }
+      box.style.display = "grid";
+      box.style.gridTemplate = "1fr / minmax(0, 1fr)";
+    }
     node.style.alignSelf = "stretch";
-    this._stretched = chain;
+    this._stretched = [...styled];
   }
 
   // The days come from the same daily forecast the weather card subscribes to.
